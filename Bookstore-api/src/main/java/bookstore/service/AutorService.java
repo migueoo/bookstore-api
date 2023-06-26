@@ -1,41 +1,22 @@
 package bookstore.service;
 
+import bookstore.dto.AutorDto;
+import bookstore.dto.AutorUpdateForm;
 import bookstore.entity.AutorEntity;
+import bookstore.entity.LivroEntity;
+import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public interface AutorService {
-    private List<AutorEntity> autores;
 
-    public AutorService() {
-        autores = new ArrayList<>();
-    }
+    List<AutorDto> listarAutores();
 
-    public List<AutorEntity> listarAutores() {
-        return autores;
-    }
+    ResponseEntity<AutorEntity> findAutorById(Long id);
 
-    public Optional<AutorEntity> buscarAutorPorId(Long id) {
-        return autores.stream()
-                .filter(autorEntity -> autorEntity.getId().equals(id))
-                .findFirst();
-    }
+    void adicionarAutor(AutorDto autorDto);
 
-    public void adicionarAutor(AutorEntity autorEntity) {
-        autores.add(autorEntity);
-    }
+    ResponseEntity updateByAutorId(AutorDto autorDto, Long id);
 
-    public void atualizarAutor(AutorEntity autorEntity) {
-        Optional<AutorEntity> autorExistente = buscarAutorPorId(autorEntity.getId());
-        autorExistente.ifPresent(a -> {
-            a.setNome(autorEntity.getNome());
-            a.setEmail(autorEntity.getEmail());
-        });
-    }
-
-    public void removerAutor(Long id) {
-        autores.removeIf(autorEntity -> autorEntity.getId().equals(id));
-    }
+    void deleteById(Long id);
 }

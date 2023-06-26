@@ -1,8 +1,7 @@
 package bookstore.resource;
 
 import bookstore.dto.LivroDto;
-import bookstore.dto.LivroUpdateForm;
-import bookstore.entity.LivroEntity;
+import bookstore.exception.BusinessException;
 import bookstore.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,28 +28,28 @@ public class LivroResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LivroEntity> buscarLivroPorId(@PathVariable Long id) {
-        return livroService.findLivroById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> findById(
+            @PathVariable Long id) {
+        try {
+            return livroService.findLivroById(id);
+            //return ResponseEntity.ok(clientService.findUserById(id)); -> Displays headers, body, status code...
+        } catch (BusinessException e) {
+            return ResponseEntity.badRequest().body("Error finding client: " + e.getMessage());
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroEntity>> listarLivros() {
-        List<LivroEntity> livros = livroService.listarLivros();
+    public ResponseEntity<List<LivroDto>> listarLivros() {
+        List<LivroDto> livros = livroService.listarLivros();
         return ResponseEntity.ok(livros);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroDto> atualizarLivro(
-            @PathVariable Long id,
-            @RequestBody LivroUpdateForm form) {
-        LivroDto livroAtualizado = livroService.updateByLivroId(form, id);
-        if (livroAtualizado != null) {
-            return ResponseEntity.ok(livroAtualizado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> update(
+            @RequestBody LivroDto livroDto,
+            @PathVariable("id") Long id) {
+        return livroService.updateByLivroId(livroDto, id);
     }
 
     @DeleteMapping("/{id}")

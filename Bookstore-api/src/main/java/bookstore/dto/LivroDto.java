@@ -11,6 +11,6 @@ public class LivroDto {
     private Long id;
     private String titulo;
     private String autor;
-    private String anoPublicacao;
+    private Integer anoPublicacao;
 
 }
