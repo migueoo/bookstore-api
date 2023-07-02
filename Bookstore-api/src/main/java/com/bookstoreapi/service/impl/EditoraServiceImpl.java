@@ -1,9 +1,7 @@
 package com.bookstoreapi.service.impl;
 
 
-import com.bookstoreapi.dto.AutorDto;
 import com.bookstoreapi.dto.EditoraDto;
-import com.bookstoreapi.entity.AutorEntity;
 import com.bookstoreapi.entity.EditoraEntity;
 import com.bookstoreapi.exception.BusinessException;
 import com.bookstoreapi.repository.EditoraRepository;
@@ -28,11 +26,11 @@ public class EditoraServiceImpl implements EditoraService {
     }
 
     @Override
-    public void adicionarAutor(EditoraDto editoraDto) {
+    public void adicionarEditora(EditoraDto editoraDto) {
 
         EditoraEntity editoraEntity = new EditoraEntity();
         editoraEntity.setNome(editoraDto.getNome());
-        editoraEntity.getNacionalidade(editoraDto.getNacionalidade());
+        editoraEntity.getNacionalidade();
         editoraRepository.save(editoraEntity);
     }
 

@@ -7,15 +7,16 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+
 public interface EditoraService {
 
     List<EditoraEntity> listarEditoras();
 
     ResponseEntity<EditoraEntity> findEditoraById(Long id);
 
-    void adicionarAutor(EditoraDto editoraDto);
+    void adicionarEditora(EditoraDto editoraDto);
 
-    ResponseEntity updateByAutorId(EditoraDto editoraDto, Long id);
+    ResponseEntity updateByEditoraId(EditoraDto editoraDto, Long id);
 
     void deleteById(Long id);
 }

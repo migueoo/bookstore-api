@@ -1,10 +1,10 @@
 package com.bookstoreapi.resource;
 
 
-import com.bookstoreapi.dto.AutorDto;
-import com.bookstoreapi.entity.AutorEntity;
+import com.bookstoreapi.dto.EditoraDto;
+import com.bookstoreapi.entity.EditoraEntity;
 import com.bookstoreapi.exception.BusinessException;
-import com.bookstoreapi.service.AutorService;
+import com.bookstoreapi.service.EditoraService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/autores")
 public class EditoraResource {
-    private final AutorService autorService;
+    private final EditoraService editoraService;
 
-    public EditoraResource(AutorService autorService) {
-        this.autorService = autorService; }
+    public EditoraResource(EditoraService editoraService) {
+        this.editoraService = editoraService; }
 
     @PostMapping
-    public ResponseEntity<Void> adicionarAutor(
-            @RequestBody AutorDto autorDto){
-        autorService.adicionarAutor(autorDto);
+    public ResponseEntity<Void> adicionarEditora(
+            @RequestBody EditoraDto editoraDto){
+        editoraService.adicionarEditora(editoraDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -30,29 +30,29 @@ public class EditoraResource {
     public ResponseEntity<?> findByid(
             @PathVariable Long id) {
          try {
-             return autorService.findAutorById(id);
+             return editoraService.findEditoraById(id);
              //return ResponseEntity.ok(clienteService.findUserByid(id));
                 }catch (BusinessException e) {
-             return ResponseEntity.badRequest().body("Error finding client: " + e.getMessage());
+             return ResponseEntity.badRequest().body("Error finding editora: " + e.getMessage());
          }
     }
     @GetMapping
-    public ResponseEntity<List<AutorEntity>> listarAutores(){
-        List<AutorEntity> autores = autorService.listarAutores();
-        return ResponseEntity.ok(autores);
+    public ResponseEntity<List<EditoraEntity>> listarEditoras(){
+        List<EditoraEntity> editoras = editoraService.listarEditoras();
+        return ResponseEntity.ok(editoras);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> update(
-            @RequestBody AutorDto autorDto,
+            @RequestBody EditoraDto editoraDto,
             @PathVariable ("id") Long id) {
-        return autorService.updateByAutorId(autorDto, id);
+        return editoraService.updateByEditoraId(editoraDto, id);
     }
 
     @DeleteMapping ("/{id}")
-    public ResponseEntity<Void> excluirLivro(@PathVariable Long id){
-        autorService.deleteById(id);
+    public ResponseEntity<Void> excluirEditora(@PathVariable Long id){
+        editoraService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
