@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/autores")
+@RequestMapping("/editoras")
 public class EditoraResource {
     private final EditoraService editoraService;
 
